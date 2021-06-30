@@ -1,4 +1,4 @@
-import OSLog
+import os.log
 import UIKit
 
 extension OSLog {
