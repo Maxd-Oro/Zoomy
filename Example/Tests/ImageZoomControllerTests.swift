@@ -1,5 +1,4 @@
 import XCTest
-import InjectableLoggers
 @testable import Zoomy
 
 class ImageZoomControllerTests: XCTestCase {

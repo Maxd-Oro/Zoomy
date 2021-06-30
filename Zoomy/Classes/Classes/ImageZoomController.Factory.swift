@@ -11,28 +11,28 @@ extension ImageZoomController {
 extension ImageZoomController.Factory {
     
     func makeTapGestureRecognizer(for context: Context) -> UITapGestureRecognizer {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let gestureRecognizer = UITapGestureRecognizer(target: context, action: #selector(context.didTap(with:)))
         gestureRecognizer.delegate = context
         return gestureRecognizer
     }
     
     func makeDoubleTapGestureRecognizer(for context: Context) -> UITapGestureRecognizer {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let gestureRecognizer = makeTapGestureRecognizer(for: context)
         gestureRecognizer.numberOfTapsRequired = 2
         return gestureRecognizer
     }
     
     func makePinchGestureRecognizer(for context: Context) -> UIPinchGestureRecognizer {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let gestureRecognizer = UIPinchGestureRecognizer(target: context, action: #selector(context.didPinch(with:)))
         gestureRecognizer.delegate = context
         return gestureRecognizer
     }
     
     func makePanGestureRecognizer(for context: Context) -> UIPanGestureRecognizer {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let gestureRecognizer = UIPanGestureRecognizer(target: context, action: #selector(context.didPan(with:)))
         gestureRecognizer.delegate = context
         return gestureRecognizer
@@ -44,7 +44,7 @@ extension ImageZoomController.Factory {
 extension ImageZoomController.Factory {
     
     func makeScrollView(for context: Context) -> UIScrollView {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let view = UIScrollView()
         view.clipsToBounds = false
         view.delegate = context
@@ -57,7 +57,7 @@ extension ImageZoomController.Factory {
     }
     
     func makeBackgroundView(for context: Context) -> UIView {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let view = UIView()
         view.backgroundColor = context.settings.primaryBackgroundColor
         view.addGestureRecognizer(context.backgroundViewTapGestureRecognizer)
@@ -66,7 +66,7 @@ extension ImageZoomController.Factory {
     }
     
     func makeScrollableImageView(for context: Context) -> UIImageView {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let view = UIImageView()
         view.addGestureRecognizer(context.scrollableImageViewTapGestureRecognizer)
         view.addGestureRecognizer(context.scrollableImageViewDoubleTapGestureRecognizer)
@@ -77,7 +77,7 @@ extension ImageZoomController.Factory {
     }
     
     func makeOverlayImageView(for context: Context) -> UIImageView {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         let view = UIImageView()
         view.image = context.image
         return view

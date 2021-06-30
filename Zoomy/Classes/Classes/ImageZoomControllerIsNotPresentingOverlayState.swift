@@ -1,5 +1,4 @@
 import UIKit
-import InjectableLoggers
 
 internal class ImageZoomControllerIsNotPresentingOverlayState {
     
@@ -17,7 +16,7 @@ extension ImageZoomControllerIsNotPresentingOverlayState: ImageZoomControllerSta
         guard   let owner = owner,
                 let imageView = owner.imageView,
                 let view = owner.containerView else { return }
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         
         owner.setupImage()
 
@@ -54,7 +53,7 @@ extension ImageZoomControllerIsNotPresentingOverlayState: ImageZoomControllerSta
     }
     
     func zoomToFit() {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         presentOverlay()
         guard owner?.state !== self else { return }
         owner?.state.zoomToFit()
@@ -68,7 +67,7 @@ extension ImageZoomControllerIsNotPresentingOverlayState: ImageZoomControllerSta
     
     func didPinch(with gestureRecognizer: UIPinchGestureRecognizer) {
         guard gestureRecognizer.state == .began else { return }
-        logger.logGesture(with: gestureRecognizer, atLevel: .verbose)
+        logger.logGesture(with: gestureRecognizer, atLevel: .debug)
         
         presentOverlay()
         guard owner?.state !== self else { return }

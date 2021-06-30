@@ -1,5 +1,4 @@
 import UIKit
-import InjectableLoggers
 
 internal class ImageZoomControllerIsHandlingScrollViewBounceTriggeredDismissalState: ImageZoomControllerIsPresentingImageViewOverlayState {
     

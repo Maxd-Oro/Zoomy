@@ -1,5 +1,4 @@
 import UIKit
-import InjectableLoggers
 
 public struct ImageZoomControllerSettings: ConfigurableUsingClosure {
     

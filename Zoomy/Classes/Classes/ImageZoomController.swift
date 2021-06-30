@@ -1,5 +1,4 @@
 import UIKit
-import InjectableLoggers
 
 public class ImageZoomController: NSObject {
     // MARK: Public Properties
@@ -25,7 +24,7 @@ public class ImageZoomController: NSObject {
     internal private(set) var image: UIImage? {
         didSet {
             guard let image = image else { return }
-            logger.log("Changed to \(image)", atLevel: Loglevel.info)
+            logger.log("Changed to \(image)", atLevel: .info)
             minimumZoomScale = neededMinimumZoomScale()
             initialAbsoluteFrameOfImageView = absoluteFrame(of: imageView?.view)
         }
@@ -51,7 +50,7 @@ public class ImageZoomController: NSObject {
     internal var initialAbsoluteFrameOfImageView: CGRect? {
         didSet {
             guard let initialAbsoluteFrameOfImageView = initialAbsoluteFrameOfImageView else { return }
-            logger.log("changed to \(initialAbsoluteFrameOfImageView)", atLevel: .verbose)
+            logger.log("changed to \(initialAbsoluteFrameOfImageView)", atLevel: .debug)
         }
     }
     
@@ -141,7 +140,7 @@ public class ImageZoomController: NSObject {
         
         state = IsNotPresentingOverlayState(owner: self)
         configureImageView()
-        logger.log("done\n", atLevel: .verbose)
+        logger.log("done\n", atLevel: .debug)
     }
     
     // MARK: Deinitalizer
@@ -176,7 +175,7 @@ public extension ImageZoomController {
         }
         
         state = IsNotPresentingOverlayState(owner: self)
-        logger.log("Did reset\n\n\n\n\n\n\n\n", atLevel: .verbose)
+        logger.log("Did reset\n\n\n\n\n\n\n\n", atLevel: .debug)
     }
 }
 
@@ -184,21 +183,21 @@ public extension ImageZoomController {
 extension ImageZoomController {
     
     @objc func didPinch(with gestureRecognizer: UIPinchGestureRecognizer) {
-        logger.logGesture(with: gestureRecognizer, atLevel: .verbose)
+        logger.logGesture(with: gestureRecognizer, atLevel: .debug)
         guard settings.isEnabled else { return }
         
         state.didPinch(with: gestureRecognizer)
     }
     
     @objc func didPan(with gestureRecognizer: UIPanGestureRecognizer) {
-        logger.logGesture(with: gestureRecognizer, atLevel: .verbose)
+        logger.logGesture(with: gestureRecognizer, atLevel: .debug)
         guard settings.isEnabled else { return }
         
         state.didPan(with: gestureRecognizer)
     }
     
     @objc func didTap(with gestureRecognizer: UITapGestureRecognizer) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard   settings.isEnabled,
                 let action = gestureRecognizerActions[gestureRecognizer] else { return }
         
@@ -227,7 +226,7 @@ extension ImageZoomController: CanPerformAction {
 extension ImageZoomController {
 
     internal func configureImageView() {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         imageView?.view.addGestureRecognizer(imageViewPinchGestureRecognizer)
         imageView?.view.addGestureRecognizer(imageViewPanGestureRecognizer)
         imageView?.view.addGestureRecognizer(imageViewTapGestureRecognizer)
@@ -245,7 +244,7 @@ extension ImageZoomController {
         
         if  imageView.image == nil,
             settings.shouldLogWarningsAndErrors {
-            logger.log("Provided imageView did not have an image at this time, this is likely to have effect on the zoom behavior.", atLevel: .warning)
+            logger.log("Provided imageView did not have an image at this time, this is likely to have effect on the zoom behavior.", atLevel: .error)
         }
     }
 }
@@ -459,12 +458,12 @@ extension ImageZoomController: UIScrollViewDelegate {
     }
     
     public func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         state.scrollViewWillBeginZooming(scrollView, with: view)
     }
     
     public func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         state.scrollViewDidEndZooming(scrollView, with: view, atScale: scale)
     }
     

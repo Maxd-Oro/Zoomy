@@ -1,14 +1,21 @@
-import InjectableLoggers
+import OSLog
+import UIKit
 
+extension OSLog {
+    func logError(_ message: CustomStringConvertible) {
+        os_log("%{public}@", log: logger, type: .fault, message.description)
+    }
 
-private let settings = Logger.Settings(activeLogLevel: Loglevel.warning,
-                                       defaultLogLevel: Loglevel.info,
-                                       loglevelStrings: [.verbose: "🔍", .info: "ℹ️", .warning: "\n⚠️", .error:"\n⛔️"],
-                                       formatSettings: [.verbose : Logger.FormatSettings(shouldShowLevel: true, shouldShowFile: true, shouldShowFunction: true, shouldShowLine: false),
-                                                        .info : Logger.FormatSettings(shouldShowLevel: true, shouldShowFile: true, shouldShowFunction: true, shouldShowLine: false),
-                                                        .warning : Logger.FormatSettings(shouldShowLevel: true, shouldShowFile: false, shouldShowFunction: false, shouldShowLine: false),
-                                                        .error : Logger.FormatSettings(shouldShowLevel: true, shouldShowFile: false, shouldShowFunction: false, shouldShowLine: false)])
+    func log(_ message: CustomStringConvertible = "", file: String = #file, line: Int = #line, function: String = #function, atLevel level: OSLogType = .default) {
+        os_log("%{public}@", log: logger, type: level, message.description)
+    }
 
-internal let logger = ZoomyLogger(settings: settings)
+    internal func logGesture(with gestureRecognizer: UIGestureRecognizer, atLevel level: OSLogType, inFile file: String = #file, inFunction function: String = #function, atLine line: Int = #line) {
+        guard gestureRecognizer.state != .changed else { return }
+        logger.log(gestureRecognizer.state, file: file, line: line, function: function, atLevel: level)
+    }
+}
 
-internal typealias Loglevel = InjectableLoggers.Loglevel
+internal let logger = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Logging")
+
+internal typealias Loglevel = OSLog

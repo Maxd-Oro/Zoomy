@@ -4,20 +4,14 @@ import PackageDescription
 let package = Package(
     name: "Zoomy",
     platforms: [
-        .iOS(.v9)
+        .iOS(.v10)
     ],
     products: [
         .library(name: "Zoomy", targets: ["Zoomy"])
     ],
-    dependencies: [
-        .package(url: "https://github.com/CuratoOpenSource/InjectableLoggers", from: "2.1.0"),
-    ],
+    dependencies: [],
     targets: [
-        .target(
-            name: "Zoomy",
-            dependencies: [.byName(name: "InjectableLoggers")],
-            path: "Zoomy"
-        ),
+        .target(name: "Zoomy", path: "Zoomy"),
     ],
     swiftLanguageVersions: [.v5]
 )

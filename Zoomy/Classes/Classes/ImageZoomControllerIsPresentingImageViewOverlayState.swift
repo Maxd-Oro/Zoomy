@@ -1,5 +1,4 @@
 import UIKit
-import InjectableLoggers
 
 internal class ImageZoomControllerIsPresentingImageViewOverlayState {
     
@@ -21,7 +20,7 @@ internal class ImageZoomControllerIsPresentingImageViewOverlayState {
     // MARK: Private properties
     internal private (set) var isDismissingOverlay = false {
         didSet {
-            logger.log(isDismissingOverlay, atLevel: .verbose)
+            logger.log(isDismissingOverlay, atLevel: .debug)
         }
     }
     
@@ -33,7 +32,7 @@ internal class ImageZoomControllerIsPresentingImageViewOverlayState {
     
     private var isBypasssingAnimateToExpectedFrameOfScrollableImageView = false {
         didSet {
-            logger.log(isBypasssingAnimateToExpectedFrameOfScrollableImageView, atLevel: .verbose)
+            logger.log(isBypasssingAnimateToExpectedFrameOfScrollableImageView, atLevel: .debug)
         }
     }
     
@@ -53,7 +52,7 @@ extension ImageZoomControllerIsPresentingImageViewOverlayState: ImageZoomControl
     }
     
     func presentOverlay(event: AnimationEvent) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard let owner = owner else { return }
         
         configureScrollView()
@@ -66,7 +65,7 @@ extension ImageZoomControllerIsPresentingImageViewOverlayState: ImageZoomControl
     }
     
     func zoomToFit() {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard let owner = owner else { return }
         
         fromFrame = containerFittingFrame(for: owner.overlayImageView)
@@ -74,7 +73,7 @@ extension ImageZoomControllerIsPresentingImageViewOverlayState: ImageZoomControl
     }
     
     func zoomIn(with gestureRecognizer: UIGestureRecognizer?) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard   let owner = owner,
                 let absoluteFrameOfImageView = owner.initialAbsoluteFrameOfImageView  else { return }
         
@@ -85,7 +84,7 @@ extension ImageZoomControllerIsPresentingImageViewOverlayState: ImageZoomControl
     }
     
     func dismissOverlay() {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard   let owner = owner,
                 let imageView = owner.imageView,
                 let absoluteFrameOfImageView = owner.initialAbsoluteFrameOfImageView else { return }
@@ -139,12 +138,12 @@ extension ImageZoomControllerIsPresentingImageViewOverlayState: ImageZoomControl
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         bypassAnimateToExpectedFrameOfScrollableImageView()
     }
     
     func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         bypassAnimateToExpectedFrameOfScrollableImageView()
     }
 }
@@ -236,7 +235,7 @@ private extension ImageZoomControllerIsPresentingImageViewOverlayState {
     }
     
     func finishPresentingOverlayImageView() {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard let owner = owner else { return }
         
         owner.scrollView.pinchGestureRecognizer?.isEnabled = true
@@ -245,7 +244,7 @@ private extension ImageZoomControllerIsPresentingImageViewOverlayState {
     }
     
     func animateToExpectedFrameOfScrollableImageView(event: AnimationEvent, onComplete: @escaping ()->()) {
-        logger.log(atLevel: .verbose)
+        logger.log(atLevel: .debug)
         guard   let owner = owner,
                 let expectedFrameOfScrollableImageView = expectedFrameOfScrollableImageView,
                 let neededContentMode = owner.imageView?.contentMode else { return }
