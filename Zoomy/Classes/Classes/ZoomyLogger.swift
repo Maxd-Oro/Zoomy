@@ -1,4 +1,3 @@
-import OSLog
 import UIKit
 
 internal class ZoomyLogger {
