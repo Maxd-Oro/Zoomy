@@ -1,21 +1,22 @@
-import os.log
 import UIKit
 
-extension OSLog {
+enum LogLevel {
+    case `default`, debug, info, error
+}
+
+struct Logger {
     func logError(_ message: CustomStringConvertible) {
-        os_log("%{public}@", log: logger, type: .fault, message.description)
+        print("[ERROR]", message.description)
     }
 
-    func log(_ message: CustomStringConvertible = "", file: String = #file, line: Int = #line, function: String = #function, atLevel level: OSLogType = .default) {
-        os_log("%{public}@", log: logger, type: level, message.description)
+    func log(_ message: CustomStringConvertible = "", file: String = #file, line: Int = #line, function: String = #function, atLevel level: LogLevel = .default) {
+        print("[LOG]", file, line, function, message.description)
     }
 
-    internal func logGesture(with gestureRecognizer: UIGestureRecognizer, atLevel level: OSLogType, inFile file: String = #file, inFunction function: String = #function, atLine line: Int = #line) {
+    internal func logGesture(with gestureRecognizer: UIGestureRecognizer, atLevel level: LogLevel, inFile file: String = #file, inFunction function: String = #function, atLine line: Int = #line) {
         guard gestureRecognizer.state != .changed else { return }
         logger.log(gestureRecognizer.state, file: file, line: line, function: function, atLevel: level)
     }
 }
 
-internal let logger = OSLog(subsystem: Bundle.main.bundleIdentifier!, category: "Logging")
-
-internal typealias Loglevel = OSLog
+internal let logger = Logger()
